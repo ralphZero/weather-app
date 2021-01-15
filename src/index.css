@@ -1,10 +1,79 @@
+:root{
+  --main-color: #100E1D;
+  --side-color: #1E213A;
+  --side-main-text: #E7E7EB;
+  --side-sec-text: #A09FB1;
+  --side-micro-text: #88869D;
+}
 *{box-sizing: border-box;}
-html, body{
+html, body, #root, .App{
   margin: 0;
   padding: 0;
   height: 100%;
 }
 body{
-  background: #100E1D;
+  background: var(--main-color);
   font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+}
+.side-panel{
+  margin: 0;
+  padding: 5vh 15px;
+  width: 320px;
+  height: 100%;
+  background-color: var(--side-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.side-panel__buttonGroup{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.side-panel__button{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  background: #6E707A;
+  color: var(--side-main-text);
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0px 4px 4px 0px #0000003a;
+  border: none;
+  border-radius: 5px;
+}
+.side-panel__button--row{
+  flex-direction: row;
+}
+.side-panel__button:hover{
+  background: #4a4b52;
+  cursor: pointer;
+}
+.side-panel__button:focus{
+  outline: none;
+  box-shadow: 0px 0px 1px 5px var(--main-color);
+}
+.side-panel__button--round{
+  border-radius: 50%;
+}
+.side-panel__button--transparent{
+  background: transparent;
+  box-shadow: none;
+}
+/**/
+.side-weather-img{
+  width: 35%;
+}
+.side-weather-temp{
+  font-size: 5.5rem;
+  font-weight: 800;
+  margin: 0;
+}
+.side-weather-temp__measure{
+  font-size: 2.3rem;
+  font-weight: 100;
+  color: var(--side-micro-text);
 }
