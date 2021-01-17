@@ -70,6 +70,11 @@
     align-items: stretch;
     overflow-y: hidden;
 }
+@media screen and (max-width: 600px) {
+    .modal {
+        width: 100% !important;
+    }
+}
 .modal:hover {
     cursor: default;
 }

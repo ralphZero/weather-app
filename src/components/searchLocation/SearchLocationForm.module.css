@@ -20,6 +20,11 @@
     padding: 0;
     color: #616475;
 }
+@media screen and (max-width: 600px) {
+    .inputGroup {
+        width: 100%;
+    }
+}
 .inputIcon {
     position: absolute;
     padding: 10px 8px;

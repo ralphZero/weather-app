@@ -38,12 +38,17 @@ body{
 }
 .App {
   display: flex;
+  flex-direction: row;
+}
+@media screen and (max-width: 600px) {
+  .App {
+    flex-direction: column;
+  }
 }
 .side-panel{
   margin: 0;
   padding: 5vh 15px;
   width: 320px;
-  height: 100%;
   height: 100%;
   background-color: var(--side-color);
   display: flex;
@@ -52,6 +57,14 @@ body{
   position: fixed;
   top: 0;
   left: 0;
+}
+@media screen and (max-width: 600px) {
+  .side-panel {
+    width: 100%;
+    position: relative;
+    height: auto;
+    gap: 3vh;
+  }
 }
 .side-panel__buttonGroup{
   display: flex;
@@ -104,6 +117,11 @@ body{
   font-weight: 100;
   color: var(--side-micro-text);
 }
+@media screen and (max-width: 600px) {
+  .side-weather-temp {
+    margin-top: 5vh;
+  }
+}
 
 /**/
 .main-panel {
@@ -114,6 +132,18 @@ body{
   justify-content: space-between;
   gap: 4vh;
   margin-left: 320px;
+}
+@media screen and (max-width: 1024px) {
+  .main-panel {
+    padding: 3vh 5%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .main-panel {
+    width: 100%;
+    margin-left: 0;
+    padding: 3vh 10%;
+  }
 }
 .main-panel__buttonGroup {
   display: flex;
@@ -161,6 +191,21 @@ body{
   grid-template-columns: repeat(5, 1fr);
   gap: 1em;
 }
+@media screen and (max-width: 950px) {
+  .temp-datalist {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (max-width: 800px) {
+  .temp-datalist {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 700px) {
+  .temp-datalist {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 /**/
 .highlight-h1 {
   font-style: normal;
@@ -176,6 +221,14 @@ body{
   grid-template-rows: repeat(2, auto);
   gap: 5vh;
 }
+
+@media screen and (max-width: 800px) {
+  .highlight-grid {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: none;
+  }
+}
+
 .highlight-item {
   display: flex;
   flex-direction: column;
