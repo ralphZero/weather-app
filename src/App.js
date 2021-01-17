@@ -1,15 +1,16 @@
 import React from "react";
-import ModalPanel from "./components/ModalPanel";
-import SidePanel from "./components/SidePanel";
-import ModalContextProvider from './contexts/ModalContext';
+import Container from "./components/Container";
+import WeatherContextProvider from "./contexts/WeatherContext";
+import UnitContextProvider from './contexts/UnitContext';
 
 const App = () => {
   return (
     <div className='App'>
-      <ModalContextProvider>
-        <ModalPanel />
-        <SidePanel />
-      </ModalContextProvider>
+      <WeatherContextProvider>
+        <UnitContextProvider>
+          <Container />
+        </UnitContextProvider>
+      </WeatherContextProvider> 
     </div>
   );
 }

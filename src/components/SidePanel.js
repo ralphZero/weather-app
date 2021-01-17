@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import bgImg from '../media/Cloud-background.png';
-import shower from '../media/Shower.png';
+import axios from 'axios';
 import { ModalContext } from '../contexts/ModalContext';
+import { WeatherContext } from '../contexts/WeatherContext';
+import { UnitContext } from '../contexts/UnitContext';
+import { UnitConverter, DateFormater, getWeatherImage } from '../Utilities';
 
 const SidePanel = () => {
     const panelStyle = {
@@ -30,32 +33,72 @@ const SidePanel = () => {
         color: 'var(--side-micro-text)'
     }
 
+    const { weatherState, locationState, locationDispatch } = useContext(WeatherContext);
+    const { unit } = useContext(UnitContext);
+    
+    let cToF = unit ===  'c' ? '℃' : '℉';
+    let temp = unit !== 'c' ? UnitConverter(weatherState[0].the_temp) : parseInt(weatherState[0].the_temp);
+    let weatherStateName = weatherState[0].weather_state_name; 
+    let currDate = DateFormater(weatherState[0].applicable_date);
+    let image = getWeatherImage(weatherState[0].weather_state_abbr);
+
     const { dispatch } = useContext(ModalContext);
+
+    const handleGeolocation = () => {
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition((position) => {
+                const lat = position.coords.latitude;
+                const long = position.coords.longitude;
+
+                axios.get('https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?lattlong='+lat+','+long+'', {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                }).then((res) => {
+                    if(res.data.length !== 0){
+                        let city = res.data[0];
+                        locationDispatch({
+                            type: 'CHANGE_LOCATION',
+                            location: {
+                                title: city.title,
+                                woeid: city.woeid
+                            }
+                        });
+                    }else{
+                        alert('An error occured while retrieving your location.');
+                    }
+                });
+
+            }, () => {
+                alert('Unable to retrieve your location.');
+            })
+        }else{
+            alert('Geolocation is not supported by this browser.');
+        }
+    }
 
     return (
         <div className='side-panel' style={panelStyle}>
             <div className='side-panel__buttonGroup'>
                 <button onClick={(e) => dispatch({type: 'SHOW_MODAL'})} className='side-panel__button'>Seach for places</button>
-                <button className='side-panel__button side-panel__button--round'>
+                <button onClick={(e) => handleGeolocation()} className='side-panel__button side-panel__button--round'>
                     <span className='material-icons'>my_location</span>
                 </button>
             </div>
             <div style={columnStyle}>
-                <img className='side-weather-img' src={shower} alt="img"/>
-                <h1 className='side-weather-temp'>15<span className='side-weather-temp__measure'>℃</span></h1>
+                <img className='side-weather-img' src={image} alt="img"/>
+                <h1 className='side-weather-temp'>{temp}<span className='side-weather-temp__measure'>{cToF}</span></h1>
             </div>
             <br/>
             <div style={columnStyle}>
-                <h3 style={{color : `var(--side-micro-text)`}}>Shower</h3>
+                <h3 style={{color : `var(--side-micro-text)`}}>{weatherStateName}</h3>
                 <span style={rowStyle}>
                     <span>Today</span>
                     <span>•</span>
-                    <span>Fri, 5 Jun</span>
+                    <span>{currDate}</span>
                 </span>
                 <div>
                     <div style={{color : `var(--side-micro-text)`}} className='side-panel__button side-panel__button--row side-panel__button--transparent'>
                         <span className='material-icons'>place</span>
-                        <span>Helsinki</span>
+                        <span>{locationState.title}</span>
                     </div>
                 </div>
             </div>

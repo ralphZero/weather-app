@@ -1,0 +1,22 @@
+.container {
+    margin: 8px 0px;
+    padding: 10px 5px;
+    color: #E7E7EB;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid transparent;
+    transition: border 330ms ease-out;
+}
+.icon {
+    opacity: 0;
+    transition: opacity 330ms ease-out;
+}
+.container:hover {
+    border: 1px solid#E7E7EB;
+    cursor: pointer;
+}
+.container:hover .icon {
+    opacity: 1;
+}

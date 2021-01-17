@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import sheet from './ModalPanel.module.css';
 import { ModalContext } from '../contexts/ModalContext';
+import { WeatherContext } from '../contexts/WeatherContext';
 import SearchLocationForm from './searchLocation/SearchLocationForm';
+import SearchLocationItem from './searchLocation/SearchLocationItem';
 
 const ModalPanel = () => {
 
@@ -14,12 +16,9 @@ const ModalPanel = () => {
         let parent;
         let content;
 
-        console.log('CurrentTarget',e.currentTarget, 'Target', e.target, 'Origin', origin);
-
         if(origin === 'close'){
             parent = e.currentTarget.parentElement;
             content = parent.lastChild;
-            console.log(parent, content);
         }else if(origin === 'container' && e.target.className === sheet.container){
             parent = e.target.firstChild;
             content = parent.lastChild;
@@ -47,6 +46,27 @@ const ModalPanel = () => {
        
     }
 
+    const [data, setData] = React.useState([]);
+
+    const { locationDispatch } = useContext(WeatherContext);
+
+    const handleCitySelected = (data) => {
+        locationDispatch({
+            type: 'CHANGE_LOCATION',
+            location: {
+                title: data.title,
+                woeid: data.woeid
+            }
+        });
+        dispatch({type: 'HIDE_MODAL'});
+    }
+
+    let resList = data.map((city) => {
+        return (
+            <SearchLocationItem key={city.woeid} id={city.woeid} title={city.title} onItemClick={handleCitySelected}/>
+        );
+    });
+
     return (
         <div style={show} className={sheet.container} onClick={(e) => handleClose(e, 'container')}>
             <div className={sheet.modal + ' ' + sheet.modalOpen}>
@@ -54,7 +74,8 @@ const ModalPanel = () => {
                     <span className='material-icons'>close</span>
                 </div>
                 <div className={sheet.content +' '+ sheet.fadeIn}>
-                    <SearchLocationForm />
+                    <SearchLocationForm data={setData} />
+                    { resList }
                 </div>
             </div>
         </div>
