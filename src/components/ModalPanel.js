@@ -75,7 +75,9 @@ const ModalPanel = () => {
                 </div>
                 <div className={sheet.content +' '+ sheet.fadeIn}>
                     <SearchLocationForm data={setData} />
-                    { resList }
+                    <div className={sheet.itemListContainer}>
+                        { resList }
+                    </div>
                 </div>
             </div>
         </div>
