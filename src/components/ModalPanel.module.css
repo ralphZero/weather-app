@@ -7,6 +7,15 @@
     }
 }
 
+@keyframes slideInMobile {
+    from {
+        width: 0%
+    }
+    to {
+        width: 100%
+    }
+}
+
 @keyframes slideOut {
     from {
         width: 320px;
@@ -16,6 +25,17 @@
         width: 0;
     }
 }
+
+@keyframes slideOutMobile {
+    from {
+        width: 100%;
+    }
+    to {
+        padding: 0;
+        width: 0%;
+    }
+}
+
 @keyframes fadeIn {
   0% {
     filter: opacity(0);
@@ -72,7 +92,7 @@
 }
 @media screen and (max-width: 600px) {
     .modal {
-        width: 100% !important;
+        width: 100%;
     }
 }
 .modal:hover {
@@ -84,12 +104,20 @@
     animation-duration: 230ms;
     animation-name: slideIn;
 }
+
 .modalClose {
     animation-name: slideOut;
     animation-fill-mode: forwards;
     animation-duration: 330ms;
 }
-
+@media screen and (max-width: 600px) {
+    .modalClose {
+        animation-name: slideOutMobile;
+    }
+    .modalOpen {
+        animation-name: slideInMobile;
+    }
+}
 .fadeIn {
     animation-fill-mode: forwards;
     animation-duration: 660ms;
